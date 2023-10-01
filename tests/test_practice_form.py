@@ -18,7 +18,7 @@ def test_automation_practice_form():
     browser.element('.react-datepicker__day--001').click()
     browser.element('#subjectsInput').type('e').press_enter()
     browser.element('[for="hobbies-checkbox-1"]').click()
-    browser.element('[id="uploadPicture"]').send_keys(os.path.abspath(r'C:\MyProjects\python_qa\tests\fixtures\picture_1.jpg'))
+    browser.element('[id="uploadPicture"]').send_keys(os.path.abspath(r'fixtures\picture_1.jpg'))
     browser.element('[id="currentAddress"]').type('My address')
     browser.element('[id="react-select-3-input"]').type('NCR').press_enter()
     browser.element('[id="react-select-4-input"]').type('Delhi').click().press_enter()
