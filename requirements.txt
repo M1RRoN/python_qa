@@ -1,5 +1,1 @@
 pytest
-webdriver-manager
-pypdf
-xlrd
-openpyxl
