@@ -1,37 +1,46 @@
+import allure
+from selene import browser
+
+from data.users import User
 from pages.registration_page import RegistrationPage
+from utils import attach
 
 
+@allure.tag("web")
+@allure.label("owner", "M1RRoN")
+@allure.feature("Регистрация пользователя")
 def test_complete_practice_form():
-    # GIVEN
     registration_page = RegistrationPage()
 
+    # GIVEN
+    user = User(
+        first_name='test',
+        last_name='user',
+        email='test@user.com',
+        gender='Male',
+        phone_number='7999999999',
+        month_of_birth='December',
+        year_of_birth='2000',
+        day_of_birth='25',
+        subject='Maths',
+        hobby='Reading',
+        picture='image.jpg',
+        current_address='Самара, Вилоновская 1',
+        state='NCR',
+        city='Delhi'
+    )
+    with allure.step("Открываем страницу регистрации"):
+        registration_page.open()
+        attach.add_screenshot(browser)
+
     # WHEN
-    registration_page.open()
-    registration_page.fill_first_name("test")
-    registration_page.fill_last_name("user")
-    registration_page.fill_email("test@user.com")
-    registration_page.fill_gender()
-    registration_page.fill_number('79999999999')
-    registration_page.fill_date_of_birth(2000, "December", 25)
-    registration_page.choose_subject('math')
-    registration_page.choose_hobbies()
-    registration_page.upload_image()
-    registration_page.fill_current_address('Самара, Вилоновская 1')
-    registration_page.choose_state('NCR')
-    registration_page.choose_city('Delhi')
-    registration_page.delete_footer()
-    registration_page.submit_form()
+    with allure.step("Заполняем и отправляем регистрационную форму"):
+        registration_page.register(user)
+        attach.add_screenshot(browser)
 
     # THEN
-    registration_page.should_registered_user_with(
-        'test user',
-        'test@user.com',
-        'Male',
-        '7999999999',
-        '25 December,2000',
-        'Maths',
-        'Reading',
-        'image.jpg',
-        'Самара, Вилоновская 1',
-        'NCR Delhi'
-    )
+    with allure.step("Проверяем, что пользователь зарегистрирован"):
+        registration_page.user_should_registered(user)
+    attach.add_logs(browser)
+    attach.add_html(browser)
+    attach.add_video(browser)
